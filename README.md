@@ -1,3 +1,7 @@
+# Realtime chat app: text, voice, image [in a single room]
+
+Connect and chat
+
 ## usage
 ```bash
 git clone https://github/malibacollab/chat && cd chat
