@@ -1,0 +1,186 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e5ddd5;
+  }
+  
+  #name-container {
+    width: 400px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  #name-input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  #join-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #25D366;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 16px;
+  }
+  
+  #join-button:hover {
+    background-color: #1ebe57;
+  }
+  
+  #chat-container {
+    width: 400px;
+    height: 600px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  #chat-header {
+    background-color: #075E54;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    background-size: cover;
+  }
+  
+  .message {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message.sent {
+    align-items: flex-end;
+  }
+  
+  .message.received {
+    align-items: flex-start;
+  }
+  
+  .message.system {
+    align-items: center;
+    color: #666;
+    font-size: 12px;
+  }
+  
+  .message-bubble {
+    max-width: 70%;
+    padding: 8px 12px;
+    border-radius: 10px;
+    position: relative;
+    font-size: 14px;
+  }
+  
+  .message.sent .message-bubble {
+    background-color: #DCF8C6;
+    border-bottom-right-radius: 2px;
+  }
+  
+  .message.received .message-bubble {
+    background-color: #FFFFFF;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  }
+  
+  .message-name {
+    font-size: 12px;
+    color: #075E54;
+    margin-bottom: 2px;
+  }
+  
+  .message-time {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+    text-align: right;
+  }
+  
+  .message-image {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    margin: 5px 0;
+  }
+  
+  .message-voice {
+    display: flex;
+    align-items: center;
+    background-color: #DCF8C6;
+    border-radius: 10px;
+    padding: 8px;
+  }
+  
+  .message.received .message-voice {
+    background-color: #FFFFFF;
+  }
+  
+  .message-voice audio {
+    width: 150px;
+  }
+  
+  #input-container {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    background-color: #f6f6f6;
+    padding: 5px;
+  }
+  
+  #message-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 5px;
+  }
+  
+  #image-button, #voice-button, #send-button {
+    padding: 10px;
+    border: none;
+    background-color: #25D366;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 5px;
+    font-size: 14px;
+  }
+  
+  #image-button:hover, #voice-button:hover, #send-button:hover {
+    background-color: #1ebe57;
+  }
+  
+  #voice-button.recording {
+    background-color: #ff4444;
+  }
+  
+  #voice-button.recording:hover {
+    background-color: #cc0000;
+  }
+  
