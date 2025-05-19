@@ -184,3 +184,22 @@ body {
     background-color: #cc0000;
   }
   
+
+  #user-list {
+    padding: 10px;
+    background-color: #f6f6f6;
+    border-bottom: 1px solid #ccc;
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  
+  .user {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .user:hover {
+    background-color: #e0e0e0;
+  }
+
+  

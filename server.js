@@ -23,7 +23,7 @@ const logger = winston.createLogger({
 // Serve static files
 app.use(express.static('public'));
 
-// Store user names
+// Store user names and their socket IDs
 const users = new Map();
 
 // Socket.IO connection
@@ -33,28 +33,35 @@ io.on('connection', (socket) => {
     if (name && typeof name === 'string' && name.trim()) {
       users.set(socket.id, name.trim());
       logger.info(`User ${name} connected: ${socket.id}`);
+      // Send updated user list to all clients
+      io.emit('user list', Array.from(users.values()));
       io.emit('chat message', { type: 'system', content: `${name} has joined the chat` });
     } else {
       socket.emit('error', 'Invalid name');
     }
   });
 
-  // Broadcast message to all clients
-  socket.on('chat message', (msg) => {
-    const name = users.get(socket.id) || 'Anonymous';
-    if (msg && msg.content) {
+  // Handle private messages
+  socket.on('private message', ({ target, content, mediaType, mediaData }) => {
+    const senderName = users.get(socket.id);
+    const targetSocketId = [...users.entries()].find(([id, name]) => name === target)?.[0];
+    if (targetSocketId) {
       const timestamp = new Date().toISOString();
-      const formattedMsg = { 
-        type: msg.type || 'user', 
-        name, 
-        content: msg.content, 
-        timestamp, 
+      const formattedMsg = {
+        type: mediaType ? 'media' : 'user',
+        name: senderName,
+        content: content || (mediaType === 'image' ? 'Image' : 'Voice note'),
+        timestamp,
         senderId: socket.id,
-        mediaType: msg.mediaType,
-        mediaData: msg.mediaData
+        targetId: targetSocketId,
+        mediaType,
+        mediaData
       };
-      logger.info(`Message from ${name} (${socket.id}): ${msg.type} - ${msg.content || msg.mediaType}`);
-      io.emit('chat message', formattedMsg);
+      logger.info(`Private message from ${senderName} to ${target}: ${content || mediaType}`);
+      io.to(targetSocketId).emit('chat message', formattedMsg); // Send to target
+      socket.emit('chat message', formattedMsg); // Echo back to sender
+    } else {
+      socket.emit('error', 'User not found');
     }
   });
 
@@ -62,8 +69,9 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     const name = users.get(socket.id) || 'Anonymous';
     logger.info(`User ${name} disconnected: ${socket.id}`);
-    io.emit('chat message', { type: 'system', content: `${name} has left the chat` });
     users.delete(socket.id);
+    io.emit('user list', Array.from(users.values()));
+    io.emit('chat message', { type: 'system', content: `${name} has left the chat` });
   });
 });
 
